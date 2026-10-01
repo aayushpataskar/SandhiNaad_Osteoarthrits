@@ -1,0 +1,410 @@
+/* ==========================================================================
+   reports/static/report.css
+   Medical Screening Report Print Stylesheet (A4 Max 2 Pages)
+   Structured with clear card blocks, underlined label/value pairs,
+   grayscale-friendly indicators, and clean print margins.
+   ========================================================================== */
+
+@page {
+  size: A4 portrait;
+  margin: 10mm 12mm 14mm 12mm;
+  @bottom-left {
+    content: "DISCLAIMER: AI-assisted community triage screening aid — not a clinical diagnosis, ICD-10 code, or KL grade.";
+    font-size: 5.5pt;
+    color: #64748b;
+    font-family: 'Noto Sans', 'Noto Sans Bengali', sans-serif;
+  }
+  @bottom-right {
+    content: "Page " counter(page) " of " counter(pages);
+    font-size: 6.5pt;
+    color: #475569;
+    font-weight: 600;
+    font-family: 'Noto Sans', sans-serif;
+  }
+}
+
+:root {
+  --primary-color: #0f2d59;
+  --secondary-color: #1e3a8a;
+  --text-color: #111827;
+  --text-muted: #4b5563;
+  --border-color: #cbd5e1;
+  --card-bg: #f8fafc;
+  --header-bg: #0f2d59;
+  --accent-cyan: #0284c7;
+
+  /* Tiers (with distinct borders and backgrounds) */
+  --tier-low-bg: #ecfdf5;
+  --tier-low-text: #065f46;
+  --tier-low-border: #059669;
+
+  --tier-mod-bg: #fffbeb;
+  --tier-mod-text: #92400e;
+  --tier-mod-border: #d97706;
+
+  --tier-high-bg: #fef2f2;
+  --tier-high-text: #991b1b;
+  --tier-high-border: #dc2626;
+
+  --tier-indet-bg: #f1f5f9;
+  --tier-indet-text: #334155;
+  --tier-indet-border: #64748b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-color);
+  background: #ffffff;
+  font-size: 8pt;
+  line-height: 1.35;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ── Watermark ─────────────────────────────────────────────────────────── */
+.watermark {
+  position: fixed;
+  top: 30%;
+  left: -15%;
+  width: 130%;
+  text-align: center;
+  font-size: 32pt;
+  font-weight: 800;
+  color: rgba(220, 38, 38, 0.12);
+  transform: rotate(-35deg);
+  pointer-events: none;
+  z-index: 9999;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ── Header Band ───────────────────────────────────────────────────────── */
+.report-header {
+  background: var(--header-bg);
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left .app-brand {
+  font-size: 7.5pt;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #93c5fd;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.header-left .report-title {
+  font-size: 13.5pt;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1.15;
+}
+
+.header-left .report-subtitle {
+  font-size: 7.5pt;
+  font-weight: 500;
+  color: #e2e8f0;
+  margin-top: 1px;
+}
+
+.header-right {
+  text-align: right;
+  font-size: 7pt;
+  line-height: 1.3;
+}
+
+.header-badge {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  padding: 3px 6px;
+  display: inline-block;
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+
+/* ── Result at a Glance Strip ─────────────────────────────────────────── */
+.glance-strip {
+  background: #ffffff;
+  border: 1.5px solid var(--border-color);
+  border-radius: 4px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.glance-title {
+  font-size: 7.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--secondary-color);
+  margin-bottom: 4px;
+}
+
+.glance-grid {
+  display: flex;
+  gap: 8px;
+}
+
+.glance-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.glance-side {
+  font-weight: 700;
+  font-size: 8.5pt;
+}
+
+/* ── Section Cards ─────────────────────────────────────────────────────── */
+.section-card {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: #ffffff;
+  margin-bottom: 7px;
+  page-break-inside: avoid;
+}
+
+.section-header {
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--border-color);
+  padding: 4px 8px;
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: var(--secondary-color);
+  letter-spacing: 0.2px;
+}
+
+.section-body {
+  padding: 6px 8px;
+}
+
+/* ── Two-Column and Three-Column Grids ─────────────────────────────────── */
+.grid-2 {
+  display: flex;
+  gap: 12px;
+}
+
+.grid-2 > div {
+  flex: 1;
+}
+
+.grid-3 {
+  display: flex;
+  gap: 8px;
+}
+
+.grid-3 > div {
+  flex: 1;
+}
+
+/* ── Underlined Label / Value Field ────────────────────────────────────── */
+.field-row {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 3.5px;
+  font-size: 7.5pt;
+}
+
+.field-label {
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+
+.field-value {
+  flex: 1;
+  border-bottom: 1px dotted #94a3b8;
+  padding-bottom: 1px;
+  font-weight: 600;
+  color: #0f172a;
+  min-height: 12px;
+}
+
+/* ── Tier Chips ────────────────────────────────────────────────────────── */
+.tier-chip {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 7.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border: 1px solid;
+}
+
+.tier-low {
+  background: var(--tier-low-bg);
+  color: var(--tier-low-text);
+  border-color: var(--tier-low-border);
+}
+
+.tier-moderate {
+  background: var(--tier-mod-bg);
+  color: var(--tier-mod-text);
+  border-color: var(--tier-mod-border);
+}
+
+.tier-high {
+  background: var(--tier-high-bg);
+  color: var(--tier-high-text);
+  border-color: var(--tier-high-border);
+}
+
+.tier-indeterminate {
+  background: var(--tier-indet-bg);
+  color: var(--tier-indet-text);
+  border-color: var(--tier-indet-border);
+}
+
+/* ── Knee Finding Blocks ───────────────────────────────────────────────── */
+.knee-box {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 5px 7px;
+  margin-bottom: 4px;
+  background: #fafafa;
+}
+
+.knee-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.top-signals-list {
+  margin-top: 3px;
+  padding-left: 14px;
+  font-size: 7pt;
+  color: #334155;
+}
+
+.top-signals-list li {
+  margin-bottom: 1px;
+}
+
+/* ── Investigations Table ──────────────────────────────────────────────── */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 7pt;
+  margin-top: 2px;
+}
+
+.report-table th, .report-table td {
+  border: 1px solid var(--border-color);
+  padding: 3px 5px;
+  text-align: left;
+}
+
+.report-table th {
+  background: #f8fafc;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+/* ── Recommendation & Advice Box ───────────────────────────────────────── */
+.advice-list {
+  padding-left: 14px;
+  margin: 4px 0;
+  font-size: 7.5pt;
+  line-height: 1.3;
+}
+
+.advice-list li {
+  margin-bottom: 2px;
+}
+
+.referral-box {
+  background: #f8fafc;
+  border-left: 3px solid var(--secondary-color);
+  padding: 4px 8px;
+  margin-top: 4px;
+  font-size: 7.5pt;
+  font-weight: 600;
+}
+
+.pending-review-note {
+  font-size: 6.5pt;
+  color: #dc2626;
+  font-weight: 700;
+  margin-top: 3px;
+  text-transform: uppercase;
+}
+
+/* ── Signature Block ───────────────────────────────────────────────────── */
+.signature-card {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 6px 10px;
+  margin-top: 6px;
+  page-break-inside: avoid;
+}
+
+.signature-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.sign-line {
+  border-bottom: 1px solid #475569;
+  height: 24px;
+  margin-bottom: 2px;
+  width: 160px;
+}
+
+/* ── Footers ───────────────────────────────────────────────────────────── */
+div.footer-left {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 120px;
+  font-size: 6pt;
+  color: #64748b;
+  line-height: 1.25;
+}
+
+div.footer-right {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 110px;
+  text-align: right;
+  font-size: 6.5pt;
+  color: #475569;
+  font-weight: 600;
+}
+
+.page-break {
+  page-break-before: always;
+}
+
+/* ---- SandhiNaad additions ---- */
+* { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.red-flag-banner {
+  margin: 0 0 6px 0; padding: 5px 8px; border: 1.5px solid var(--tier-high-border);
+  background: var(--tier-high-bg); color: var(--tier-high-text); border-radius: 5px;
+  font-weight: 700; font-size: 8pt;
+}
+.red-flag-banner .red-flag-list { font-weight: 400; font-size: 7pt; margin-top: 2px; }

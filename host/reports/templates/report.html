@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ t.header.title }} - {{ data.patient.id }}</title>
+  <style>
+    @font-face {
+      font-family: 'Noto Sans';
+      src: url('{{ font_dir }}/NotoSans-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Noto Sans';
+      src: url('{{ font_dir }}/NotoSans-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Noto Sans Bengali';
+      src: url('{{ font_dir }}/NotoSansBengali-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Noto Sans Bengali';
+      src: url('{{ font_dir }}/NotoSansBengali-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+    {{ css_content | safe }}
+    @page {
+      @bottom-left { content: "{{ t.page_footer }}"; }
+      @bottom-right { content: "{{ t.page_word }} " counter(page) " / " counter(pages); }
+    }
+  </style>
+</head>
+<body>
+
+  {# ── Simulated Watermark ── #}
+  {% if is_simulated or data.screening.data_source == 'simulated' %}
+  <div class="watermark">{{ t.watermark }}</div>
+  {% endif %}
+
+  {# ── Header Band ── #}
+  <div class="report-header">
+    <div class="header-left">
+      <div class="app-brand">{{ t.header.app_name }}</div>
+      <div class="report-title">{{ t.header.title }}</div>
+      <div class="report-subtitle">{{ t.header.subtitle }}</div>
+    </div>
+    <div class="header-right">
+      <div class="header-badge">{{ t.labels.report_id }}: {{ data.screening.id }}</div>
+      <div>{{ t.labels.date_of_report }}: <strong>{{ data.screening.date }}</strong></div>
+      <div>{{ t.labels.device_id }}: <strong>{{ data.screening.device_id }}</strong></div>
+    </div>
+  </div>
+
+  {# ── Result at a Glance Strip ── #}
+  <div class="glance-strip">
+    <div class="glance-title">{{ t.at_a_glance }}</div>
+    <div class="glance-grid">
+      {% for knee in data.knees %}
+      <div class="glance-item tier-{{ knee.tier }}">
+        <span class="glance-side">{{ t.sides[knee.side] }}:</span>
+        <span class="tier-chip tier-{{ knee.tier }}">
+          {{ t.tiers[knee.tier] }}
+          {% if knee.tier == 'indeterminate' %} — {{ t.common.retake_or_refer }}{% endif %}
+        </span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if data.red_flags %}
+  <div class="red-flag-banner">
+    ⚠ {{ t.red_flag_banner }}
+    <div class="red-flag-list">{% for rf in data.red_flags %}{{ t.red_flag_names[rf] }}{% if not loop.last %} · {% endif %}{% endfor %}</div>
+  </div>
+  {% endif %}
+
+  {# ── Section 1: Patient Information ── #}
+  <div class="section-card">
+    <div class="section-header">{{ t.sec1_title }}</div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.patient_name }}:</span>
+            <span class="field-value">{{ data.patient.name }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.patient_id }}:</span>
+            <span class="field-value">{{ data.patient.id }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.age_sex }}:</span>
+            <span class="field-value">{{ data.patient.age }} {{ t.common.years.replace('{age}', '') }} / {{ data.patient.sex }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.district_block }}:</span>
+            <span class="field-value">{{ data.patient.district }} / {{ data.patient.block }}</span>
+          </div>
+        </div>
+        <div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.health_worker }}:</span>
+            <span class="field-value">{{ data.screening.worker_name }} ({{ data.screening.worker_role }})</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.worker_id }}:</span>
+            <span class="field-value">{{ data.screening.worker_id }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.facility }}:</span>
+            <span class="field-value">{{ data.screening.facility }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.report_type }}:</span>
+            <span class="field-value">{{ t.reasons.community_screening }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# ── Section 2: Reason for Report ── #}
+  <div class="section-card">
+    <div class="section-header">{{ t.sec2_title }}</div>
+    <div class="section-body">
+      <div class="field-row">
+        <span class="field-label">{{ t.labels.reason }}:</span>
+        <span class="field-value">{{ t.reasons.community_screening }}</span>
+      </div>
+    </div>
+  </div>
+
+  {# ── Section 3: Clinical History ── #}
+  <div class="section-card">
+    <div class="section-header">{{ t.sec3_title }}</div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div>
+          <strong style="color: var(--secondary-color); font-size: 7.5pt;">{{ t.sec3a_title }}</strong>
+          <div class="field-row" style="margin-top: 3px;">
+            <span class="field-label">{{ t.labels.occupation }}:</span>
+            <span class="field-value">{{ data.patient.occupation }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.height_weight }}:</span>
+            <span class="field-value">{{ data.patient.height_cm }} cm / {{ data.patient.weight_kg }} kg</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.bmi }}:</span>
+            <span class="field-value">{{ data.patient.bmi }} kg/m²</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.prior_injury }}:</span>
+            <span class="field-value">{{ t.common.yes if data.questionnaire.prior_injury else t.common.no }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.family_history }}:</span>
+            <span class="field-value">{{ t.common.yes if data.questionnaire.family_history else t.common.no }}</span>
+          </div>
+        </div>
+        <div>
+          <strong style="color: var(--secondary-color); font-size: 7.5pt;">{{ t.sec3b_title }}</strong>
+          <div class="field-row" style="margin-top: 3px;">
+            <span class="field-label">{{ t.labels.pain_score }}:</span>
+            <span class="field-value"><strong>{{ data.questionnaire.pain_score }}</strong> / 10</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.morning_stiffness }}:</span>
+            <span class="field-value">{{ data.questionnaire.morning_stiffness_minutes }} {{ t.common.minutes.replace('{min}', '') }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.stairs_difficulty }}:</span>
+            <span class="field-value">{{ t.common.yes if data.questionnaire.difficulty_stairs else t.common.no }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.squat_difficulty }}:</span>
+            <span class="field-value">{{ t.common.yes if data.questionnaire.difficulty_squat else t.common.no }}</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.swelling }}:</span>
+            <span class="field-value">{{ t.common.yes if data.questionnaire.swelling else t.common.no }}</span>
+          </div>
+          {% if data.questionnaire.difficulty_kneel is not none and data.questionnaire.difficulty_kneel is defined %}
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.kneel_difficulty }}:</span>
+            <span class="field-value">{{ t.common.yes if data.questionnaire.difficulty_kneel else t.common.no }}</span>
+          </div>
+          {% endif %}
+          {% if data.questionnaire.difficulty_chair is defined %}
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.standing_chair }}:</span>
+            <span class="field-value">{{ t.common.yes if data.questionnaire.difficulty_chair else t.common.no }}</span>
+          </div>
+          {% endif %}
+          {% if data.questionnaire.night_pain is defined %}
+          <div class="field-row">
+            <span class="field-label">{{ t.labels.night_pain }}:</span>
+            <span class="field-value">{{ t.common.yes if data.questionnaire.night_pain else t.common.no }}</span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% if data.history %}
+      <div style="margin-top: 5px;">
+        <strong style="color: var(--secondary-color); font-size: 7.5pt;">{{ t.sec3c_title }}</strong>
+        <div class="grid-2" style="margin-top: 3px;">
+          <div>
+            {% if data.history.affected_knee %}
+            <div class="field-row"><span class="field-label">{{ t.labels.affected_knee }}:</span>
+              <span class="field-value">{{ data.history.affected_knee }}</span></div>
+            {% endif %}
+            {% if data.history.symptom_duration %}
+            <div class="field-row"><span class="field-label">{{ t.labels.symptom_duration }}:</span>
+              <span class="field-value">{{ data.history.symptom_duration }}</span></div>
+            {% endif %}
+            {% if data.history.pain_rest_activity %}
+            <div class="field-row"><span class="field-label">{{ t.labels.pain_rest_activity }}:</span>
+              <span class="field-value">{{ data.history.pain_rest_activity }}</span></div>
+            {% endif %}
+            <div class="field-row"><span class="field-label">{{ t.labels.comorbidities }}:</span>
+              <span class="field-value">{% if data.history.comorbidities %}{% for c in data.history.comorbidities %}{{ t.comorbidity_names[c] }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %}{{ t.common.none }}{% endif %}</span></div>
+          </div>
+          <div>
+            <div class="field-row"><span class="field-label">{{ t.labels.pain_medicine }}:</span>
+              <span class="field-value">{{ t.common.yes if data.history.pain_medicine else t.common.no }}</span></div>
+            <div class="field-row"><span class="field-label">{{ t.labels.walking_aid }}:</span>
+              <span class="field-value">{{ t.common.yes if data.history.walking_aid else t.common.no }}</span></div>
+            <div class="field-row"><span class="field-label">{{ t.labels.red_flags }}:</span>
+              <span class="field-value">{% if data.red_flags %}<span style="color:#991b1b">{% for rf in data.red_flags %}{{ t.red_flag_names[rf] }}{% if not loop.last %}, {% endif %}{% endfor %}</span>{% else %}{{ t.common.none }}{% endif %}</span></div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {# ── Section 4: Examination ── #}
+  <div class="section-card">
+    <div class="section-header">{{ t.sec4_title }}</div>
+    <div class="section-body">
+      {% if data.clinical_check %}
+      <div style="margin-bottom: 4px;">
+        <strong style="color: var(--secondary-color); font-size: 7.5pt;">{{ t.sec4a_title }}</strong>
+        <div class="grid-3" style="margin-top: 3px;">
+          {% if data.clinical_check.effusion is defined %}
+          <div class="field-row"><span class="field-label">{{ t.labels.effusion }}:</span> <span class="field-value">{{ t.common.yes if data.clinical_check.effusion == 'yes' else t.common.no }}</span></div>
+          {% endif %}
+          {% if data.clinical_check.tenderness is defined %}
+          <div class="field-row"><span class="field-label">{{ t.labels.tenderness }}:</span> <span class="field-value">{{ t.common.yes if data.clinical_check.tenderness == 'yes' else t.common.no }}</span></div>
+          {% endif %}
+          {% if data.clinical_check.bony_enlargement is defined %}
+          <div class="field-row"><span class="field-label">{{ t.labels.bony_enlargement }}:</span> <span class="field-value">{{ t.common.yes if data.clinical_check.bony_enlargement == 'yes' else t.common.no }}</span></div>
+          {% endif %}
+        </div>
+        <div class="grid-3">
+          {% if data.clinical_check.warmth is defined %}
+          <div class="field-row"><span class="field-label">{{ t.labels.warmth }}:</span> <span class="field-value">{{ t.common.yes if data.clinical_check.warmth == 'yes' else t.common.no }}</span></div>
+          {% endif %}
+          {% if data.clinical_check.crepitus is defined %}
+          <div class="field-row"><span class="field-label">{{ t.labels.crepitus }}:</span> <span class="field-value">{{ t.common.yes if data.clinical_check.crepitus == 'yes' else t.common.no }}</span></div>
+          {% endif %}
+          {% if data.clinical_check.flexion_deg %}
+          <div class="field-row"><span class="field-label">{{ t.labels.flexion_range }}:</span> <span class="field-value">{{ data.clinical_check.flexion_deg }}°</span></div>
+          {% endif %}
+          {% if data.clinical_check.alignment and data.clinical_check.alignment != 'not_assessed' %}
+          <div class="field-row"><span class="field-label">{{ t.labels.alignment }}:</span> <span class="field-value">{{ t.alignment_names[data.clinical_check.alignment] }}</span></div>
+          {% endif %}
+          {% if data.clinical_check.gait_note %}
+          <div class="field-row" style="grid-column: span 1;"><span class="field-label">{{ t.labels.gait_note }}:</span> <span class="field-value">{{ data.clinical_check.gait_note }}</span></div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div>
+        <strong style="color: var(--secondary-color); font-size: 7.5pt;">{{ t.sec4b_title }}</strong>
+        <div class="grid-2" style="margin-top: 3px;">
+          {% for knee in data.knees %}
+          <div class="knee-box">
+            <div class="knee-box-header">
+              <span style="font-weight: 700;">{{ t.sides[knee.side] }}</span>
+              <span class="tier-chip tier-{{ knee.tier }}">
+                {{ t.tiers[knee.tier] }}
+                {% if knee.tier == 'indeterminate' %} — {{ t.common.retake_or_refer }}{% endif %}
+              </span>
+            </div>
+            <div class="field-row">
+              <span class="field-label">{{ t.labels.confidence }}:</span>
+              <span class="field-value">{{ knee.confidence }}</span>
+            </div>
+            <div style="font-size: 7pt; font-weight: 600; color: var(--text-muted); margin-top: 2px;">{{ t.labels.top_signals }}:</div>
+            <ul class="top-signals-list">
+              {% for feat in knee.top_features %}
+              <li>{{ feat.plain_text }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# ── Page 2 boundary or continuous flow ── #}
+
+  {# ── Section 5: Investigations & Session Details ── #}
+  <div class="section-card">
+    <div class="section-header">{{ t.sec5_title }}</div>
+    <div class="section-body">
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>{{ t.labels.knee_side }}</th>
+            <th>{{ t.labels.exercise }}</th>
+            <th>{{ t.labels.duration }}</th>
+            <th>{{ t.labels.reps }}</th>
+            <th>{{ t.labels.valid_events }}</th>
+            <th>{{ t.labels.qc_status }}</th>
+            <th>{{ t.labels.qc_reason }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for knee in data.knees %}
+          <tr>
+            <td><strong>{{ t.sides[knee.side] }}</strong></td>
+            <td>{{ knee.session.exercise }}</td>
+            <td>{{ knee.session.duration_s }}s</td>
+            <td>{{ knee.session.reps }}</td>
+            <td>{{ knee.qc.valid_events }}</td>
+            <td>
+              <span class="tier-chip {{ 'tier-low' if knee.qc.passed else 'tier-high' }}" style="padding: 1px 4px; font-size: 6.5pt;">
+                {{ t.common.passed if knee.qc.passed else t.common.failed }}
+              </span>
+            </td>
+            <td>{{ knee.qc.reason }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="grid-3" style="margin-top: 4px; font-size: 6.5pt; color: var(--text-muted);">
+        <div><strong>{{ t.labels.device_id }}:</strong> {{ data.screening.device_id }}</div>
+        <div><strong>{{ t.labels.model_version }}:</strong> {{ data.model.name }} {{ data.model.version }}</div>
+        <div><strong>{{ t.labels.data_source }}:</strong> {{ t.data_sources[data.screening.data_source] if data.screening.data_source in t.data_sources else data.screening.data_source }}</div>
+      </div>
+      {% if data.model.synthetic %}
+      <div style="margin-top: 2px; font-size: 6.5pt; color: #92400e;"><strong>{{ t.labels.model_note }}:</strong> {{ t.model_note }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  {# ── Section 6: Screening Assessment ── #}
+  <div class="section-card">
+    <div class="section-header">{{ t.sec6_title }}</div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div>
+          <strong style="color: var(--secondary-color); font-size: 7.5pt;">{{ t.sec6a_title }}</strong>
+          {% for knee in data.knees %}
+          <div class="field-row" style="margin-top: 2px;">
+            <span class="field-label">{{ t.sides[knee.side] }}:</span>
+            <span class="field-value">
+              <span class="tier-chip tier-{{ knee.tier }}">{{ t.tiers[knee.tier] }}</span>
+              {% if knee.tier == 'indeterminate' %} ({{ t.common.retake_or_refer }}){% endif %}
+            </span>
+          </div>
+          {% endfor %}
+        </div>
+        <div>
+          <strong style="color: var(--secondary-color); font-size: 7.5pt;">{{ t.sec6b_title }}</strong>
+          {% for knee in data.knees %}
+          <div class="field-row" style="margin-top: 2px;">
+            <span class="field-label">{{ t.sides[knee.side] }} {{ t.labels.confidence }}:</span>
+            <span class="field-value">{{ knee.confidence }}</span>
+          </div>
+          {% endfor %}
+          {% if data.clinical_prior is defined and data.clinical_prior is not none %}
+          <div class="field-row" style="margin-top: 2px; font-size: 6.5pt; color: var(--text-muted);">
+            <span class="field-label">{{ t.labels.clinical_prior }}:</span>
+            <span class="field-value" style="font-weight: normal; font-size: 6.5pt;">{{ (data.clinical_prior * 100)|round(0)|int }}%</span>
+          </div>
+          {% endif %}
+          <div class="field-row" style="margin-top: 2px; font-size: 6.5pt; color: var(--text-muted);">
+            <span class="field-label">{{ t.labels.probability_technical }}:</span>
+            <span class="field-value" style="font-weight: normal; font-size: 6.5pt;">
+              {% for knee in data.knees %}
+                {{ t.sides[knee.side] }}: {% if knee.probability is not none %}{{ (knee.probability * 100)|round(0)|int }}%{% else %}N/A{% endif %}{% if not loop.last %} | {% endif %}
+              {% endfor %}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# ── Section 7: Recommendations ── #}
+  <div class="section-card">
+    <div class="section-header">{{ t.sec7_title }}</div>
+    <div class="section-body">
+      <strong style="color: var(--secondary-color); font-size: 7.5pt;">{{ t.sec7a_title }}</strong>
+      <ul class="advice-list">
+        {% for item in data.advice['items'] %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+
+      <div class="referral-box">
+        {{ t.labels.recommended_referral }}: {{ data.referral.recommended_action }}
+      </div>
+
+      <div style="margin-top: 5px;">
+        <strong style="color: var(--secondary-color); font-size: 7.5pt;">{{ t.sec7b_title }}:</strong>
+        <span style="font-size: 7.5pt; color: #1e293b;">
+          {{ t.activity_guidance[data.advice.tier] }}
+        </span>
+      </div>
+
+      {% if not data.advice.reviewed %}
+      <div class="pending-review-note">
+        * {{ t.advice_pending_review }}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {# ── Signature Block ── #}
+  <div class="signature-card">
+    <div class="signature-grid">
+      <div>
+        <div class="field-row">
+          <span class="field-label">{{ t.labels.signed_by }}:</span>
+          <span class="field-value">{{ data.screening.worker_name }}</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">{{ t.labels.worker_role }}:</span>
+          <span class="field-value">{{ data.screening.worker_role }}</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">{{ t.labels.worker_id }}:</span>
+          <span class="field-value">{{ data.screening.worker_id }}</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">{{ t.labels.facility }}:</span>
+          <span class="field-value">{{ data.screening.facility }}</span>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <div class="sign-line"></div>
+        <div style="font-size: 7pt; font-weight: 700; color: var(--text-muted);">{{ t.labels.signature_line }}</div>
+        <div style="font-size: 6.5pt; color: #64748b; margin-top: 2px;">{{ data.screening.date }}</div>
+      </div>
+      <div>
+        <div class="field-row">
+          <span class="field-label">{{ t.labels.recipient }}:</span>
+          <span class="field-value">{{ data.patient.name }} ({{ data.patient.id }})</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">{{ t.labels.sign_date }}:</span>
+          <span class="field-value">{{ data.screening.date }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# ── Document Footer Block ── #}
+  <div class="report-footer-doc" style="margin-top: 6px; padding: 4px 6px; border: 1px dashed #cbd5e1; border-radius: 4px; font-size: 6pt; color: #64748b; line-height: 1.25;">
+    <strong>{{ t.disclaimer }}</strong><br>
+    {{ t.labels.report_id }}: {{ data.screening.id }} | {{ t.labels.model_version }}: {{ data.model.name }} {{ data.model.version }}
+  </div>
+
+</body>
+</html>

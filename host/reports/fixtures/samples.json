@@ -1,0 +1,421 @@
+{
+  "low": {
+    "patient": {
+      "id": "PT-2026-0814",
+      "name": "Priya Saikia",
+      "age": 48,
+      "sex": "Female",
+      "height_cm": 154,
+      "weight_kg": 56,
+      "bmi": 23.6,
+      "occupation": "Weaver / Handloom artisan",
+      "district": "Kamrup Rural",
+      "block": "Hajo"
+    },
+    "screening": {
+      "id": "SCR-2026-0928-01",
+      "date": "2026-09-28 10:30",
+      "worker_name": "Demo Health Worker",
+      "worker_role": "ASHA / Community Health Worker",
+      "facility": "Hajo Health Sub-Center",
+      "worker_id": "HW-AS-042",
+      "device_id": "ESP32-OA-098",
+      "app_version": "v1.2.0-sih",
+      "data_source": "hardware",
+      "language": "en"
+    },
+    "questionnaire": {
+      "pain_score": 2,
+      "morning_stiffness_minutes": 10,
+      "difficulty_stairs": false,
+      "difficulty_squat": false,
+      "difficulty_kneel": false,
+      "swelling": false,
+      "prior_injury": false,
+      "family_history": false
+    },
+    "clinical_check": {
+      "effusion": "no",
+      "tenderness": "no",
+      "bony_enlargement": "no",
+      "warmth": "no",
+      "crepitus": "no",
+      "gait_note": "Normal reciprocal gait cadence without antalgic lurch."
+    },
+    "knees": [
+      {
+        "side": "right",
+        "tier": "low",
+        "probability": 0.14,
+        "confidence": "High (94%)",
+        "top_features": [
+          { "name": "acoustic_energy", "plain_text": "Smooth joint acoustic profile during flexion" },
+          { "name": "angular_velocity_symmetry", "plain_text": "Symmetric angular motion throughout repetition" }
+        ],
+        "qc": {
+          "passed": true,
+          "valid_events": 18,
+          "reps": 10,
+          "contact_quality": "Optimal",
+          "reason": "Stable skin-sensor interface and continuous cadence maintained."
+        },
+        "session": {
+          "duration_s": 42,
+          "reps": 10,
+          "exercise": "Seated active knee extension/flexion (0°–90°)"
+        }
+      },
+      {
+        "side": "left",
+        "tier": "low",
+        "probability": 0.12,
+        "confidence": "High (96%)",
+        "top_features": [
+          { "name": "acoustic_energy", "plain_text": "Minimal acoustic emission during full flexion cycle" },
+          { "name": "smoothness_index", "plain_text": "Consistent acceleration trajectory" }
+        ],
+        "qc": {
+          "passed": true,
+          "valid_events": 19,
+          "reps": 10,
+          "contact_quality": "Optimal",
+          "reason": "Complete movement amplitude without motion artifact."
+        },
+        "session": {
+          "duration_s": 40,
+          "reps": 10,
+          "exercise": "Seated active knee extension/flexion (0°–90°)"
+        }
+      }
+    ],
+    "advice": {
+      "tier": "low",
+      "items": [
+        "Maintain active low-impact physical exercise including daily brisk walking and gentle knee mobility drills.",
+        "Adopt joint-friendly postural habits during agricultural or domestic household tasks.",
+        "Repeat community screening in 12 months or sooner if knee stiffness or discomfort increases."
+      ],
+      "reviewed": true
+    },
+    "referral": {
+      "recommended_action": "Routine follow-up at next village health camp."
+    },
+    "model": {
+      "name": "OA-NER Sensor Fusion Classifier",
+      "version": "v1.4.2-ner"
+    }
+  },
+  "moderate": {
+    "patient": {
+      "id": "PT-2026-0721",
+      "name": "Biren Das",
+      "age": 54,
+      "sex": "Male",
+      "height_cm": 162,
+      "weight_kg": 68,
+      "bmi": 25.9,
+      "occupation": "Tea garden field worker / Farmer",
+      "district": "Dibrugarh",
+      "block": "Barbarua"
+    },
+    "screening": {
+      "id": "SCR-2026-0928-02",
+      "date": "2026-09-28 11:15",
+      "worker_name": "Demo Health Worker",
+      "worker_role": "Community Health Officer (CHO)",
+      "facility": "Barbarua Ayushman Bharat HWC",
+      "worker_id": "CHO-AS-109",
+      "device_id": "ESP32-OA-098",
+      "app_version": "v1.2.0-sih",
+      "data_source": "hardware",
+      "language": "en"
+    },
+    "questionnaire": {
+      "pain_score": 5,
+      "morning_stiffness_minutes": 25,
+      "difficulty_stairs": true,
+      "difficulty_squat": true,
+      "difficulty_kneel": false,
+      "swelling": false,
+      "prior_injury": false,
+      "family_history": true
+    },
+    "clinical_check": {
+      "effusion": "no",
+      "tenderness": "yes",
+      "bony_enlargement": "no",
+      "warmth": "no",
+      "crepitus": "yes",
+      "gait_note": "Mild left knee antalgic gait noted during incline walk."
+    },
+    "knees": [
+      {
+        "side": "right",
+        "tier": "low",
+        "probability": 0.22,
+        "confidence": "High (91%)",
+        "top_features": [
+          { "name": "acoustic_energy", "plain_text": "Minor crepitus acoustic transient near terminal extension" }
+        ],
+        "qc": {
+          "passed": true,
+          "valid_events": 16,
+          "reps": 10,
+          "contact_quality": "Optimal",
+          "reason": "Adequate contact quality and event rhythm."
+        },
+        "session": {
+          "duration_s": 45,
+          "reps": 10,
+          "exercise": "Seated active knee extension/flexion (0°–90°)"
+        }
+      },
+      {
+        "side": "left",
+        "tier": "moderate",
+        "probability": 0.58,
+        "confidence": "Moderate (83%)",
+        "top_features": [
+          { "name": "vibroacoustic_peaks", "plain_text": "Recurrent high-frequency friction bursts between 35°–60° flexion" },
+          { "name": "angular_velocity_hesitation", "plain_text": "Subtle deceleration during mid-flexion transition" }
+        ],
+        "qc": {
+          "passed": true,
+          "valid_events": 17,
+          "reps": 10,
+          "contact_quality": "Good",
+          "reason": "Quality check passed with minimal baseline drift."
+        },
+        "session": {
+          "duration_s": 48,
+          "reps": 10,
+          "exercise": "Seated active knee extension/flexion (0°–90°)"
+        }
+      }
+    ],
+    "advice": {
+      "tier": "moderate",
+      "items": [
+        "Initiate structured quadriceps and hamstring strengthening exercises twice daily.",
+        "Avoid prolonged static squatting or carrying unassisted heavy field loads where possible.",
+        "Schedule a primary health center (PHC) medical review with a community medical officer within 4–6 weeks for clinical evaluation."
+      ],
+      "reviewed": true
+    },
+    "referral": {
+      "recommended_action": "Recommended PHC medical officer review within 4–6 weeks."
+    },
+    "model": {
+      "name": "OA-NER Sensor Fusion Classifier",
+      "version": "v1.4.2-ner"
+    }
+  },
+  "high": {
+    "patient": {
+      "id": "PT-2026-0610",
+      "name": "Anima Baruah",
+      "age": 62,
+      "sex": "Female",
+      "height_cm": 150,
+      "weight_kg": 67,
+      "bmi": 29.8,
+      "occupation": "Homemaker / Agricultural smallholder",
+      "district": "Jorhat",
+      "block": "Titabor"
+    },
+    "screening": {
+      "id": "SCR-2026-0928-03",
+      "date": "2026-09-28 12:40",
+      "worker_name": "Demo Health Worker",
+      "worker_role": "Multi-Purpose Health Worker (MPW)",
+      "facility": "Titabor Block Primary Health Center",
+      "worker_id": "MPW-AS-088",
+      "device_id": "ESP32-OA-098",
+      "app_version": "v1.2.0-sih",
+      "data_source": "hardware",
+      "language": "en"
+    },
+    "questionnaire": {
+      "pain_score": 8,
+      "morning_stiffness_minutes": 45,
+      "difficulty_stairs": true,
+      "difficulty_squat": true,
+      "difficulty_kneel": true,
+      "swelling": true,
+      "prior_injury": true,
+      "family_history": true
+    },
+    "clinical_check": {
+      "effusion": "yes",
+      "tenderness": "yes",
+      "bony_enlargement": "yes",
+      "warmth": "no",
+      "crepitus": "yes",
+      "gait_note": "Pronounced right antalgic limp with reduced stance phase duration."
+    },
+    "knees": [
+      {
+        "side": "right",
+        "tier": "high",
+        "probability": 0.88,
+        "confidence": "High (92%)",
+        "top_features": [
+          { "name": "acoustic_burst_energy", "plain_text": "Prominent multi-band acoustic crepitus throughout full range" },
+          { "name": "angular_smoothness", "plain_text": "Marked velocity stutter and guarding at 40°–70° flexion" }
+        ],
+        "qc": {
+          "passed": true,
+          "valid_events": 20,
+          "reps": 10,
+          "contact_quality": "Optimal",
+          "reason": "Clear signal fidelity across all repetition segments."
+        },
+        "session": {
+          "duration_s": 52,
+          "reps": 10,
+          "exercise": "Seated active knee extension/flexion (0°–90°)"
+        }
+      },
+      {
+        "side": "left",
+        "tier": "moderate",
+        "probability": 0.61,
+        "confidence": "Moderate (85%)",
+        "top_features": [
+          { "name": "vibroacoustic_peaks", "plain_text": "Moderate acoustic friction on eccentric phase" }
+        ],
+        "qc": {
+          "passed": true,
+          "valid_events": 16,
+          "reps": 10,
+          "contact_quality": "Optimal",
+          "reason": "Repetitions completed with consistent contact."
+        },
+        "session": {
+          "duration_s": 47,
+          "reps": 10,
+          "exercise": "Seated active knee extension/flexion (0°–90°)"
+        }
+      }
+    ],
+    "advice": {
+      "tier": "high",
+      "items": [
+        "Prioritize prompt medical evaluation at Community Health Center (CHC) or District Hospital orthopedic outpatient clinic.",
+        "Avoid deep knee flexion, abrupt high-impact loads, and unassisted hill climbing until evaluated.",
+        "Consult physician regarding weight-bearing support, pain management, and dedicated physical therapy."
+      ],
+      "reviewed": false
+    },
+    "referral": {
+      "recommended_action": "Priority referral to CHC / District Hospital Orthopedic OPD."
+    },
+    "model": {
+      "name": "OA-NER Sensor Fusion Classifier",
+      "version": "v1.4.2-ner"
+    }
+  },
+  "indeterminate": {
+    "patient": {
+      "id": "PT-2026-0504",
+      "name": "Tarun Gogoi",
+      "age": 51,
+      "sex": "Male",
+      "height_cm": 168,
+      "weight_kg": 72,
+      "bmi": 25.5,
+      "occupation": "Carpenter / Daily Wage Labour",
+      "district": "Golaghat",
+      "block": "Bokakhat"
+    },
+    "screening": {
+      "id": "SCR-2026-0928-04",
+      "date": "2026-09-28 14:10",
+      "worker_name": "Demo Health Worker",
+      "worker_role": "ASHA Worker",
+      "facility": "Bokakhat Mini PHC",
+      "worker_id": "ASHA-AS-019",
+      "device_id": "ESP32-OA-098",
+      "app_version": "v1.2.0-sih",
+      "data_source": "hardware",
+      "language": "en"
+    },
+    "questionnaire": {
+      "pain_score": 4,
+      "morning_stiffness_minutes": 15,
+      "difficulty_stairs": true,
+      "difficulty_squat": false,
+      "difficulty_kneel": false,
+      "swelling": false,
+      "prior_injury": false,
+      "family_history": false
+    },
+    "clinical_check": {
+      "effusion": "no",
+      "tenderness": "yes",
+      "bony_enlargement": "no",
+      "warmth": "no",
+      "crepitus": "no",
+      "gait_note": "Gait within normal functional limits."
+    },
+    "knees": [
+      {
+        "side": "right",
+        "tier": "indeterminate",
+        "probability": null,
+        "confidence": "Unreliable (QC Failed)",
+        "top_features": [
+          { "name": "motion_artifact", "plain_text": "Sensor displacement and incomplete flexion range detected" }
+        ],
+        "qc": {
+          "passed": false,
+          "valid_events": 4,
+          "reps": 4,
+          "contact_quality": "Poor / Loose contact",
+          "reason": "Excessive baseline displacement and incomplete repetition arc (<60° reached)."
+        },
+        "session": {
+          "duration_s": 22,
+          "reps": 4,
+          "exercise": "Seated active knee extension/flexion (0°–90°)"
+        }
+      },
+      {
+        "side": "left",
+        "tier": "low",
+        "probability": 0.18,
+        "confidence": "High (90%)",
+        "top_features": [
+          { "name": "acoustic_energy", "plain_text": "Normal joint acoustic profile" }
+        ],
+        "qc": {
+          "passed": true,
+          "valid_events": 18,
+          "reps": 10,
+          "contact_quality": "Optimal",
+          "reason": "Complete movement cadence achieved."
+        },
+        "session": {
+          "duration_s": 44,
+          "reps": 10,
+          "exercise": "Seated active knee extension/flexion (0°–90°)"
+        }
+      }
+    ],
+    "advice": {
+      "tier": "indeterminate",
+      "items": [
+        "Repeat sensor screening ensuring firm sensor band placement, minimum baseline stillness, and full repetition arc.",
+        "If sensor quality check fails on repeat session, proceed directly with primary health center clinical consultation."
+      ],
+      "reviewed": false
+    },
+    "referral": {
+      "recommended_action": "Technical retake recommended; refer to PHC if symptoms persist."
+    },
+    "model": {
+      "name": "OA-NER Sensor Fusion Classifier",
+      "version": "v1.4.2-ner"
+    }
+  }
+}

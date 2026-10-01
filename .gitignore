@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C / Firmware build files
+.pio/
+.vscode/
+.idea/
+build/
+*.bin
+*.elf
+*.hex
+
+# Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Logs
+*.log
+setup_log.txt
+
+# OS generated files
+.DS_Store
+Thumbs.db

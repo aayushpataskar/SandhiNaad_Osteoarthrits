@@ -1,0 +1,20 @@
+{
+  "model": "late_fusion",
+  "synthetic": true,
+  "auc": 0.9619,
+  "auc_ci_low": 0.9068,
+  "auc_ci_high": 0.9966,
+  "sensitivity": 0.9,
+  "specificity": 0.9333,
+  "accuracy": 0.9167,
+  "threshold": 0.4877,
+  "n_subjects": 60,
+  "n_positive": 30,
+  "n_negative": 30,
+  "confusion_matrix": {
+    "tn": 28,
+    "fp": 2,
+    "fn": 3,
+    "tp": 27
+  }
+}

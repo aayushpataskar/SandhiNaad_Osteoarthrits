@@ -1,0 +1,241 @@
+{
+  "header": {
+    "app_name": "SANDHINAAD · OA-NER SCREENING SYSTEM",
+    "title": "KNEE OA SCREENING REPORT",
+    "subtitle": "Screening aid, not a diagnosis"
+  },
+  "watermark": "SIMULATED DATA - NOT A REAL MEASUREMENT",
+  "disclaimer": "DISCLAIMER: This screening report is an AI-assisted point-of-care screening aid for rural community triage. It does NOT constitute a clinical diagnosis, ICD-10 categorization, radiographic Kellgren-Lawrence grade, or prognostic determination. Clinical correlation by a qualified medical practitioner is required.",
+  "advice_pending_review": "Advice text pending clinical review.",
+  "at_a_glance": "Result at a Glance",
+  "sec1_title": "1. Patient Information",
+  "sec2_title": "2. Reason for Report",
+  "sec3_title": "3. Clinical History",
+  "sec3a_title": "3a. Background & Demographics",
+  "sec3b_title": "3b. Presenting Complaints",
+  "sec4_title": "4. Examination",
+  "sec4a_title": "4a. Worker's Clinical Check",
+  "sec4b_title": "4b. Sensor Screening Findings",
+  "sec5_title": "5. Investigations & Sensor Details",
+  "sec6_title": "6. Screening Assessment",
+  "sec6a_title": "6a. Tier Classification",
+  "sec6b_title": "6b. Confidence & Quality Assessment",
+  "sec7_title": "7. Recommendations",
+  "sec7a_title": "7a. Advice & Next Steps",
+  "sec7b_title": "7b. Activity Guidance",
+  "labels": {
+    "patient_name": "Patient Name",
+    "patient_id": "Patient ID",
+    "age_sex": "Age / Sex",
+    "date_of_report": "Date of Report",
+    "health_worker": "Health Worker",
+    "worker_id": "Worker ID",
+    "facility": "Facility / Health Sub-Center",
+    "district_block": "District / Block",
+    "report_type": "Report Type",
+    "reason": "Primary Reason for Screening",
+    "occupation": "Occupation",
+    "height_weight": "Height / Weight",
+    "bmi": "Body Mass Index (BMI)",
+    "prior_injury": "History of Knee Injury",
+    "family_history": "Family History of Joint Pain",
+    "pain_score": "Self-Reported Pain Score (0–10)",
+    "morning_stiffness": "Morning Stiffness Duration",
+    "stairs_difficulty": "Difficulty Climbing Stairs",
+    "squat_difficulty": "Difficulty Squatting",
+    "kneel_difficulty": "Difficulty Kneeling",
+    "swelling": "Joint Swelling",
+    "effusion": "Joint Effusion",
+    "tenderness": "Joint Line Tenderness",
+    "bony_enlargement": "Bony Enlargement",
+    "warmth": "Joint Warmth / Erythema",
+    "crepitus": "Audible / Palpable Crepitus",
+    "gait_note": "Observed Gait Pattern",
+    "knee_side": "Knee Side",
+    "tier": "Screening Tier",
+    "confidence": "Measurement Confidence",
+    "top_signals": "Top Contributing Signals",
+    "exercise": "Standardized Exercise Protocol",
+    "duration": "Recording Duration",
+    "reps": "Repetitions Completed",
+    "valid_events": "Valid Acoustic / Motion Events",
+    "qc_status": "Quality Check Status",
+    "qc_reason": "Quality Check Remark",
+    "device_id": "Screening Device ID",
+    "model_version": "Screening Model Version",
+    "data_source": "Data Acquisition Source",
+    "probability_technical": "Technical Signal Probability (Technical Index)",
+    "recommended_referral": "Referral Recommendation",
+    "signature_block_title": "Healthcare Worker Sign-off",
+    "signed_by": "Conducted & Signed By",
+    "worker_role": "Role / Designation",
+    "signature_line": "Authorized Signature",
+    "sign_date": "Date & Time",
+    "recipient": "Report Provided To",
+    "page_x_of_y": "Page {page} of {pages}",
+    "report_id": "Report ID",
+    "comorbidities": "Comorbidities",
+    "red_flags": "Red Flags",
+    "night_pain": "Night Pain",
+    "walking_aid": "Uses Walking Aid",
+    "pain_medicine": "Current Pain Medicine",
+    "symptom_duration": "Symptom Duration",
+    "affected_knee": "Affected Knee",
+    "pain_rest_activity": "Pain at Rest / During Activity",
+    "standing_chair": "Difficulty Rising from Chair",
+    "flexion_range": "Knee Flexion Range",
+    "alignment": "Alignment",
+    "clinical_prior": "Clinical Prior Probability",
+    "model_note": "Model Note"
+  },
+  "tiers": {
+    "low": "Low Risk",
+    "moderate": "Moderate Risk",
+    "high": "High Risk",
+    "indeterminate": "Indeterminate"
+  },
+  "sides": {
+    "left": "Left Knee",
+    "right": "Right Knee"
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "passed": "Passed",
+    "failed": "Failed",
+    "minutes": "{min} minutes",
+    "seconds": "{sec} s",
+    "years": "{age} yrs",
+    "retake_or_refer": "Retake or refer",
+    "none": "None reported",
+    "not_assessed": "Not assessed",
+    "degrees": "{deg}°"
+  },
+  "reasons": {
+    "community_screening": "Community-based early osteoarthritis risk screening and functional mobility triage."
+  },
+  "advice": {
+    "low": [
+      "Maintain active low-impact physical exercise including daily brisk walking and gentle knee mobility drills.",
+      "Adopt joint-friendly postural habits during agricultural or domestic household tasks.",
+      "Repeat community screening in 12 months or sooner if knee stiffness or discomfort increases."
+    ],
+    "moderate": [
+      "Initiate structured quadriceps and hamstring strengthening exercises twice daily.",
+      "Avoid prolonged static squatting or carrying unassisted heavy field loads where possible.",
+      "Schedule a primary health center (PHC) medical review with a community medical officer within 4–6 weeks for clinical evaluation."
+    ],
+    "high": [
+      "Prioritize prompt medical evaluation at Community Health Center (CHC) or District Hospital orthopedic outpatient clinic.",
+      "Avoid deep knee flexion, abrupt high-impact loads, and unassisted hill climbing until evaluated.",
+      "Consult physician regarding weight-bearing support, pain management, and dedicated physical therapy."
+    ],
+    "indeterminate": [
+      "Repeat sensor screening ensuring firm sensor band placement, minimum baseline stillness, and full repetition arc.",
+      "If sensor quality check fails on repeat session, proceed directly with primary health center clinical consultation."
+    ]
+  },
+  "activity_guidance": {
+    "low": "Encourage routine daily activities, regular village walking, and joint flexibility routines.",
+    "moderate": "Advise paced daily activity with periodic sitting rest periods. Limit deep squatting and heavy lifting.",
+    "high": "Recommend modified daily duties minimizing steep climbs, heavy lifting, and prolonged kneeling. Use walking support if unsteady.",
+    "indeterminate": "Continue usual daily precautions while arranging repeat sensor assessment or medical review."
+  },
+  "referral": {
+    "routine": "Routine follow-up at next village health camp.",
+    "phc_review": "Recommended PHC medical officer review within 4–6 weeks.",
+    "priority_chc": "Priority referral to CHC / District Hospital Orthopedic OPD.",
+    "technical_retake": "Technical retake recommended; refer to PHC if symptoms persist."
+  },
+  "sec3c_title": "3c. Comorbidities & Red Flags",
+  "red_flag_banner": "RED FLAG PRESENT — Refer to a doctor. Do not rely on this screening.",
+  "comorbidity_names": {
+    "diabetes": "Diabetes",
+    "inflammatory_arthritis": "Inflammatory arthritis",
+    "gout": "Gout"
+  },
+  "red_flag_names": {
+    "fever_hot_knee": "Fever with hot, red, swollen knee",
+    "sudden_severe_swelling": "Sudden severe swelling",
+    "recent_significant_injury": "Recent significant injury",
+    "unable_bear_weight": "Unable to bear weight",
+    "unexplained_weight_loss_bone_pain": "Unexplained weight loss with bone pain"
+  },
+  "alignment_names": {
+    "normal": "Normal",
+    "varus": "Bowed (varus)",
+    "valgus": "Knock-kneed (valgus)",
+    "not_assessed": "Not assessed"
+  },
+  "durations": {
+    "weeks": "weeks",
+    "months": "months",
+    "years": "years"
+  },
+  "confidence_levels": {
+    "high": "High",
+    "moderate": "Moderate",
+    "low": "Low"
+  },
+  "confidence_fmt": "{level} ({n} valid cycles, spread ±{spread}%)",
+  "exercise_protocol": "Seated active knee extension/flexion (0°–90°)",
+  "qc_reasons": {
+    "ok": "Adequate acoustic contact and complete movement cycles.",
+    "few_cycles": "Fewer than 3 valid movement cycles — repeat the recording.",
+    "link_errors": "Data-link errors during recording — repeat the recording.",
+    "low_quality": "Most movements were outside the protocol (small range or pauses) — result shown with low confidence; repeat with slow, full bends."
+  },
+  "data_sources": {
+    "hardware": "Wearable sensor (live)",
+    "simulated": "Simulator (no patient data)"
+  },
+  "model_note": "Prototype model trained on synthetic data — not clinically validated.",
+  "feature_text": {
+    "events_per_cycle": {
+      "up": "More joint clicks (crepitus events) per movement than typical",
+      "down": "Few joint clicks during movement"
+    },
+    "rom": {
+      "up": "Good knee range of motion",
+      "down": "Reduced knee range of motion"
+    },
+    "kurtosis": {
+      "up": "Sharp, impulsive joint sounds",
+      "down": "Smooth, non-impulsive joint sounds"
+    },
+    "spectral_centroid": {
+      "up": "Joint sound energy at higher frequencies",
+      "down": "Joint sound energy shifted to lower frequencies"
+    },
+    "hf_ratio": {
+      "up": "More high-frequency acoustic content",
+      "down": "Less high-frequency acoustic content"
+    },
+    "rms": {
+      "up": "Louder joint sounds during movement",
+      "down": "Quiet joint sounds during movement"
+    },
+    "peak_dbfs": {
+      "up": "Strong acoustic peaks during movement",
+      "down": "Low acoustic peaks during movement"
+    },
+    "cycle_duration": {
+      "up": "Slower flexion–extension movement",
+      "down": "Brisk flexion–extension movement"
+    },
+    "peak_flex_vel": {
+      "up": "Fast bending speed",
+      "down": "Slow bending speed"
+    },
+    "peak_ext_vel": {
+      "up": "Fast straightening speed",
+      "down": "Slow straightening speed"
+    },
+    "_generic": {
+      "up": "Acoustic/motion signal '{name}' above typical",
+      "down": "Acoustic/motion signal '{name}' below typical"
+    }
+  },
+  "page_footer": "DISCLAIMER: AI-assisted community triage screening aid — not a clinical diagnosis, ICD-10 code, or KL grade.",
+  "page_word": "Page"
+}
